@@ -11,9 +11,6 @@ import { fileURLToPath } from "url";
 import { register } from "./controller/authController.js";
 import { createPost } from "./controller/postController.js";
 import { verifyToken } from "./middleware/auth.js";
-import User from "./model/User.js";
-import Post from "./model/post.js";
-import { users, posts } from "./data/index.js";
 
 //CONFIGURATION
 const __filename = fileURLToPath(import.meta.url);
@@ -61,7 +58,7 @@ app.use("/api/v1/auth", authRoutes);
 app.use("/api/v1/user", userRoutes);
 app.use("api/v1/post/", postRoutes);
 
-const port = process.env.PORT || 4000;
+const port = process.env.PORT || 3000;
 
 const start = async () => {
   try {
@@ -69,10 +66,6 @@ const start = async () => {
     console.log("connected to the database");
     app.listen(port, () => {
       console.log(`server is listening to port ${port}...!!`);
-
-      //add sample data
-      // User.insertMany(users);
-      // Post.insertMany(posts);
     });
   } catch (error) {
     console.log(error);
