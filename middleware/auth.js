@@ -1,11 +1,11 @@
-import jwt from "jsonwebtoken";
+const jwt = require("jsonwebtoken");
 
-export const verifyToken = async (req, res, next) => {
+const verifyToken = async function (req, res, next) {
   try {
     let token = req.header("Authorization");
 
     if (!token) {
-      return res.status(403).send("Acess denied!:(");
+      return res.status(403).send("Access denied!:(");
     }
 
     if (token.startsWith("Bearer ")) {
@@ -18,4 +18,8 @@ export const verifyToken = async (req, res, next) => {
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
+};
+
+module.exports = {
+  verifyToken,
 };

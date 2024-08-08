@@ -1,10 +1,10 @@
-import express from "express";
-import {
+const express = require("express");
+const {
   getFeedPost,
   getUserPost,
   likePost,
-} from "../controller/postController.js";
-import { verifyToken } from "../middleware/auth.js";
+} = require("../controller/postController.js");
+const { verifyToken } = require("../middleware/auth.js");
 
 const router = express.Router();
 
@@ -13,4 +13,4 @@ router.get("/:userId/feed", verifyToken, getUserPost);
 
 router.patch("/:id/like", verifyToken, likePost);
 
-export default router;
+module.exports = router;

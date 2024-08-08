@@ -1,21 +1,17 @@
-import express from "express";
-import { connectDb } from "./DB/connect.js";
-import dotenv from "dotenv";
-import bodyParser from "body-parser";
-import cors from "cors";
-import multer from "multer";
-import helmet from "helmet";
-import morgan from "morgan";
-import path from "path";
-import { fileURLToPath } from "url";
-import { register } from "./controller/authController.js";
-import { createPost } from "./controller/postController.js";
-import { verifyToken } from "./middleware/auth.js";
+const express = require("express");
+const { connectDb } = require("./DB/connect.js");
+const dotenv = require("dotenv");
+const bodyParser = require("body-parser");
+const cors = require("cors");
+const multer = require("multer");
+const helmet = require("helmet");
+const morgan = require("morgan");
+const path = require("path");
+const { register } = require("./controller/authController.js");
+const { createPost } = require("./controller/postController.js");
+const { verifyToken } = require("./middleware/auth.js");
 
-//CONFIGURATION
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
-
+// CONFIGURATION
 dotenv.config();
 const app = express();
 app.use(express.json());
@@ -27,7 +23,7 @@ app.use(bodyParser.urlencoded({ limit: "30mb", extended: true }));
 app.use(cors());
 app.use("/assets", express.static(path.join(__dirname, "public/assets")));
 
-//File storage
+// File storage
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
     cb(null, "public/assets");
@@ -39,7 +35,7 @@ const storage = multer.diskStorage({
 
 const upload = multer({ storage });
 
-//routes with filesor where image will be uploaded
+// Routes with files or where image will be uploaded
 app.post("/api/v1/auth/register", upload.single("picture"), register);
 app.post(
   "/api/v1/post/createPost",
@@ -48,23 +44,23 @@ app.post(
   createPost
 );
 
-//Routes
-import authRoutes from "./routes/authRoutes.js";
-import userRoutes from "./routes/userRoutes.js";
-import postRoutes from "./routes/postRoute.js";
+// Routes
+const authRoutes = require("./routes/authRoutes.js");
+const userRoutes = require("./routes/userRoutes.js");
+const postRoutes = require("./routes/postRoute.js");
 
-// API's
+// APIs
 app.use("/api/v1/auth", authRoutes);
 app.use("/api/v1/user", userRoutes);
 app.use("/api/v1/post", postRoutes);
 
 const port = process.env.PORT || 3000;
 
-const start = async () => {
+const start = async function () {
   try {
     await connectDb(process.env.MONGO_URL);
     console.log("connected to the database");
-    app.listen(port, () => {
+    app.listen(port, function () {
       console.log(`server is listening to port ${port}...!!`);
     });
   } catch (error) {

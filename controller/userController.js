@@ -1,6 +1,6 @@
-import User from "../model/User.js";
+const User = require("../model/User.js");
 
-export const getUser = async (req, res) => {
+const getUser = async (req, res) => {
   try {
     const { id } = req.params;
     const user = await User.findById(id);
@@ -11,7 +11,7 @@ export const getUser = async (req, res) => {
   }
 };
 
-export const getUserFriends = async (req, res) => {
+const getUserFriends = async (req, res) => {
   try {
     const { id } = req.params;
     const user = await User.findById(id);
@@ -32,7 +32,7 @@ export const getUserFriends = async (req, res) => {
   }
 };
 
-export const addRemoveFriend = async (req, res) => {
+const addRemoveFriend = async (req, res) => {
   try {
     const { id, friendId } = req.params;
     const user = await User.findById(id);
@@ -63,4 +63,10 @@ export const addRemoveFriend = async (req, res) => {
   } catch (err) {
     res.status(404).json({ error: err.message });
   }
+};
+
+module.exports = {
+  getUser,
+  getUserFriends,
+  addRemoveFriend,
 };

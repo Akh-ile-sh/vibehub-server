@@ -1,10 +1,10 @@
-import express from "express";
-import {
+const express = require("express");
+const {
   addRemoveFriend,
   getUser,
   getUserFriends,
-} from "../controller/userController.js";
-import { verifyToken } from "../middleware/auth.js";
+} = require("../controller/userController.js");
+const { verifyToken } = require("../middleware/auth.js");
 
 const router = express.Router();
 
@@ -12,4 +12,4 @@ router.get("/:id", verifyToken, getUser);
 router.get("/:id/friends", verifyToken, getUserFriends);
 router.patch("/:id/:friendId/addRemoveFriend", verifyToken, addRemoveFriend);
 
-export default router;
+module.exports = router;
