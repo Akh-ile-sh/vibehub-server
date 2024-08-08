@@ -42,7 +42,7 @@ const upload = multer({ storage });
 //routes with filesor where image will be uploaded
 app.post("/api/v1/auth/register", upload.single("picture"), register);
 app.post(
-  "api/v1/post/createPost",
+  "/api/v1/post/createPost",
   verifyToken,
   upload.single("picture"),
   createPost
@@ -56,7 +56,7 @@ import postRoutes from "./routes/postRoute.js";
 // API's
 app.use("/api/v1/auth", authRoutes);
 app.use("/api/v1/user", userRoutes);
-app.use("api/v1/post/", postRoutes);
+app.use("/api/v1/post", postRoutes);
 
 const port = process.env.PORT || 3000;
 
